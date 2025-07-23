@@ -18,6 +18,8 @@ When closing the application, you may see the following prompt in the terminal:
 Terminate batch job (Y/N):
 **Please respond with `N`**, otherwise other Python applications running on your system may be affected or unexpectedly closed.
 
+## ⚠️ This web application has not been tested on macOS systems yet.
+
 ## 🛠 Installation and Usage
 
 1. Ensure **Python 3** is installed on your system.  
