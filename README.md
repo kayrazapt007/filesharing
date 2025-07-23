@@ -12,7 +12,7 @@
 - 🎯 When sharing files, you can **select which devices** will receive the file.  
 - 🔍 Provides **detailed feedback** about the file sharing process, including which devices received the file.
 
-## ⚠️ Important Notice
+## ⚠️ Important Notice For Windows Users
 
 When closing the application, you may see the following prompt in the terminal:
 Terminate batch job (Y/N):
