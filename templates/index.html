@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>FileSharing</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{{ url_for("static", filename="css/main.css") }}'>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/11f074db37.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body class="grid grid-cols-12 w-full h-full lato-regular bg-gray-800">
+    <div class="col-span-12 md:col-span-9 h-full w-full order-2 md:order-1">
+        <p class="text-xl lg:text-2xl text-center text-white m-x-2 mt-8">You can share files with site.</p>   
+        <p class="text-xl lg:text-2xl text-center text-white">You can access the site by entering <span class="bg-gray-900 p-1 rounded-xl ip">{{ ip }}:444</span></p>   
+
+    <!-- Drag-and-Drop Area -->
+    <div class="flex items-center justify-center w-full p-4">
+        <label for="dropzone-file" class="flex flex-col hover:shadow-xl transition-shadow duration-300 hover:shadow-gray-700 items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                </svg>
+                <p class="mb-2 text-sm text-white"><span class="font-semibold">Click to upload files</span> or drag them here</p>
+                <p class="text-xs text-white" id="selected-file">You can upload anything except folders.</p>
+            </div>
+            <input id="dropzone-file" type="file" class="hidden" />
+        </label>
+    </div>
+
+    <!-- Drawer Component -->
+    <div id="drawer-top-example" class="fixed top-0 left-0 right-0 z-40 w-full p-4 transition-transform -translate-y-full bg-gray-800" tabindex="-1" aria-labelledby="drawer-top-label">
+        <button type="button" data-drawer-hide="drawer-top-example" aria-controls="drawer-top-example" class="bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" data-drawer-target="drawer-top-example">
+            <i class="fa-solid fa-xmark"></i>
+            <span class="sr-only">Close menu</span>
+        </button>
+        <div class="grid grid-cols-12 gap-8">
+
+            <div class="col-span-6">
+                <div class="grid grid-cols-12 gap-6">
+                    <p class="col-span-3 text-white m-4 text-xl">Start Upload</p>
+                    <p id="status" class="w-full text-green-600 mt-2"></p>
+                </div>
+                <button id="uploadButton" type="button" class="py-2 px-4 bg-gray-600 mt-2 ml-4 text-white rounded hover:bg-gray-700">Upload</button>
+                <div class="m-4 w-full m-auto block">
+                    <progress id="progressBar" value="0" max="100" class="w-full h-5 m-0 m-auto block rounded-lg shadow-lg"></progress>
+                    <span id="progressText" class="block text-center mt-2 text-white">0%</span>
+                </div>
+            </div>
+
+            <div class="col-span-6">
+                <p class="response"></p>
+                <form action="/shareFileWithUsers" method="POST" class="form">
+                    <div class="inputs"></div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+        <p class="col-span-12 w-full text-white mt-12 ml-4 text-3xl border-b-2 border-white">Files Shared With Me</p>
+        <div class="w-full p-4 grid grid-cols-12 gap-2 sharedFilesMainDiv"></div>
+    </div>
+
+    <div class="col-span-12 md:col-span-3 order-1 w-full md:border-0 border-b-2 border-white md:order-2">
+        <div class="m-0 m-auto w-full p-3 shadow-2xl border-b-2 border-white">
+            <h1 class="text-center text-white font-semibold text-5xl">FileSharing</h1>
+            <p class="text-center text-white mb-2 opacity-40 font-light lg:text-base ">Powered by KaEasy Co.</p>
+        </div>
+        <div class="m-0 m-auto w-full p-3">
+            <ul class="list-disc list-inside">
+                <li class="text-base text-xl mt-3 text-yellow-400"><span class="text-white myDevice"></span><span class="text-gray-400 myName"></span></li>
+                <br>
+            </ul>
+            <ul class="list-disc list-inside list"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src='{{ url_for("static", filename="js/main.js") }}'></script>
+</body>
+</html>

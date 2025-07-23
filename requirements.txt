@@ -1,0 +1,5 @@
+flask_socketio
+flask
+asgiref
+werkzeug
+aiofiles
